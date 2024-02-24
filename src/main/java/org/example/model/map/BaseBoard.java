@@ -92,7 +92,7 @@ public class BaseBoard<T> implements Board<T> {
 
     @Override
     public boolean isEmpty(Coordinate coordinate) {
-        return values.containsKey(coordinate);
+        return !values.containsKey(coordinate);
     }
 
     private boolean inRange(Coordinate coordinate) {
