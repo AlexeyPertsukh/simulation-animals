@@ -1,66 +1,31 @@
 package org.example.model.map;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class BaseBoard<T> implements Board<T> {
+    private static final String NOT_FOUND = "not found: ";
+    private static final String NOT_FOUND_AT_COORDINATE = "not found at row %d, column %d";
+    private static final String ILLEGAL_COORDINATE = "illegal row %d, column %d";
     private final int rows;
     private final int columns;
-    protected final Object[][] values;
+
+    private final Map<T, Coordinate> coordinates = new HashMap<>();
+    private final Map<Coordinate, T> values = new HashMap<>();
 
     public BaseBoard(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        this.values = new Object[rows][columns];
-    }
-
-    @Override
-    public void put(int row, int column, T value) {
-        values[row][column] = value;
-    }
-
-    @Override
-    public void put(Coordinate coordinate, T value) {
-        put(coordinate.row, coordinate.column, value);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public T get(int row, int column) {
-        if (values[row][column] == null) {
-            throw new IllegalArgumentException();
-        }
-        return (T) values[row][column];
-    }
-
-    @Override
-    public T get(Coordinate coordinate) {
-        return get(coordinate.row, coordinate.column);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public T remove(int row, int column) {
-        if (values[row][column] == null) {
-            throw new IllegalArgumentException();
-        }
-        T t = (T) values[row][column];
-        values[row][column] = null;
-        return t;
-    }
-
-    @Override
-    public T remove(Coordinate coordinate) {
-        return remove(coordinate.row, coordinate.column);
     }
 
     @Override
     public Coordinate coordinate(T value) {
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                if (value == values[row][column]) {
-                    return new Coordinate(row, column);
-                }
-            }
+        Coordinate coordinate = coordinates.get(value);
+        if (coordinate == null) {
+            throw new IllegalArgumentException(NOT_FOUND + value);
         }
-        throw new IllegalArgumentException("not found: " + value);
+        return coordinate;
     }
 
     @Override
@@ -74,13 +39,65 @@ public class BaseBoard<T> implements Board<T> {
     }
 
     @Override
+    public void put(int row, int column, T value) {
+        put(new Coordinate(row, column), value);
+    }
+
+    @Override
+    public void put(Coordinate coordinate, T value) {
+        if(!inRange(coordinate)) {
+            String message = String.format(ILLEGAL_COORDINATE, coordinate.row, coordinate.column);
+            throw new IllegalArgumentException(message);
+        }
+        coordinates.put(value, coordinate);
+        values.put(coordinate, value);
+    }
+
+    @Override
+    public T get(int row, int column) {
+        return get(new Coordinate(row, column));
+    }
+
+    @Override
+    public T get(Coordinate coordinate) {
+        T value = values.get(coordinate);
+        if (value == null) {
+            String message = String.format(NOT_FOUND_AT_COORDINATE, coordinate.row, coordinate.column);
+            throw new IllegalArgumentException(message);
+        }
+
+        return value;
+    }
+
+    @Override
+    public T remove(int row, int column) {
+        return remove(new Coordinate(row, column));
+    }
+
+    @Override
+    public T remove(Coordinate coordinate) {
+        if (!values.containsKey(coordinate)) {
+            String message = String.format(NOT_FOUND_AT_COORDINATE, coordinate.row, coordinate.column);
+            throw new IllegalArgumentException(message);
+        }
+        T value = values.remove(coordinate);
+        coordinates.remove(value);
+        return value;
+    }
+
+    @Override
     public boolean isEmpty(int row, int column) {
-        return values[row][column] == null;
+        return isEmpty(new Coordinate(row, column));
     }
 
     @Override
     public boolean isEmpty(Coordinate coordinate) {
-        return isEmpty(coordinate.row, coordinate.column);
+        return values.containsKey(coordinate);
     }
 
+    private boolean inRange(Coordinate coordinate) {
+        int row = coordinate.row;
+        int column = coordinate.column;
+        return row >= 0 && row < rows && column >= 0 && column < columns;
+    }
 }
