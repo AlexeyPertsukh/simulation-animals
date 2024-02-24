@@ -11,8 +11,8 @@ public class BaseBoard<T> implements Board<T> {
     private final int rows;
     private final int columns;
 
-    private final Map<T, Coordinate> coordinates = new HashMap<>();
-    private final Map<Coordinate, T> values = new HashMap<>();
+    protected final Map<T, Coordinate> coordinates = new HashMap<>();
+    protected final Map<Coordinate, T> values = new HashMap<>();
 
     public BaseBoard(int rows, int columns) {
         this.rows = rows;
