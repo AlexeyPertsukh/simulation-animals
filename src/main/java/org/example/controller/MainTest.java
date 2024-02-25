@@ -5,10 +5,11 @@ import org.example.controller.view_factory.ViewFactory;
 import org.example.model.Simulation;
 import org.example.model.map.Map;
 import org.example.model.map_factory.BasicRandomMapFactory;
+import org.example.model.map_factory.OneHerbivoreFixMapFactory;
 
-public class Main {
+public class MainTest {
     public static void main(String[] args) {
-        Map map = (new BasicRandomMapFactory()).create();
+        Map map = (new OneHerbivoreFixMapFactory()).create();
         ViewFactory viewFactory = new EmojiViewFactory();
 
         Simulation simulation = new Simulation(map, viewFactory);

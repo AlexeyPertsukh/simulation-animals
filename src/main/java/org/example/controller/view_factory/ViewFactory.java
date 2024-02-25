@@ -7,5 +7,6 @@ import java.util.function.Supplier;
 
 public interface ViewFactory {
     View viewMap(Map map);
+    View textView(int num);
     View textView(String text);
 }

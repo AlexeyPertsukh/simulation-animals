@@ -17,4 +17,9 @@ public class EmojiViewFactory implements ViewFactory{
     public View textView(String text) {
         return new TextView(text);
     }
+
+    @Override
+    public View textView(int num) {
+        return new TextView(String.valueOf(num));
+    }
 }

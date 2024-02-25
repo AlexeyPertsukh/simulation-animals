@@ -1,17 +1,25 @@
 package org.example.model.entity;
 
+import org.example.model.map.Coordinate;
 import org.example.model.map.Map;
 
-public class Herbivore extends Creature{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Herbivore extends Creature {
     private final static int SPEED = 2;
     private final static int HP = 1;
-    public Herbivore() {
-        super(SPEED, HP);
+
+    public Herbivore(Map map) {
+        super(map, SPEED, HP);
     }
+
+
 
     @Override
-    public void makeMove(Map map) {
-
+    protected boolean isFood(Entity entity) {
+            return entity == StaticEntity.GRASS;
     }
+
 
 }

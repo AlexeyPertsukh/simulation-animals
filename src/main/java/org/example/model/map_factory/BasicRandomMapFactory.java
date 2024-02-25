@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class BasicMapFactory implements MapFactory {
+public class BasicRandomMapFactory implements MapFactory {
     private final static int ROWS = 10;
     private final static int COLUMNS = 50;
     private final static int PERCENT_GRASS = 6;
@@ -34,11 +34,11 @@ public class BasicMapFactory implements MapFactory {
         int numRock = size * PERCENT_ROCK / 100;
         int numTree = size * PERCENT_TREE / 100;
 
-        putEntity(map, coordinates, numGrass, ()->StaticEntity.GRASS);
-        putEntity(map, coordinates, numRock, ()->StaticEntity.ROCK);
-        putEntity(map, coordinates, numTree, ()->StaticEntity.TREE);
-        putEntity(map, coordinates, NUM_HERBIVORE, Herbivore::new);
-        putEntity(map, coordinates, NUM_PREDATOR, Predator::new);
+        putEntity(map, coordinates, numGrass, () -> StaticEntity.GRASS);
+        putEntity(map, coordinates, numRock, () -> StaticEntity.ROCK);
+        putEntity(map, coordinates, numTree, () -> StaticEntity.TREE);
+        putEntity(map, coordinates, NUM_HERBIVORE, () -> new Herbivore(map));
+        putEntity(map, coordinates, NUM_PREDATOR, () -> new Predator(map));
 
         return map;
     }
@@ -55,7 +55,7 @@ public class BasicMapFactory implements MapFactory {
 
     private void putEntity(Map map, List<Coordinate> coordinates, int num, Supplier<Entity> supplier) {
         for (int i = 0; i < num; i++) {
-            int index = random.nextInt(coordinates.size()-1);
+            int index = random.nextInt(coordinates.size() - 1);
             Coordinate coordinate = coordinates.remove(index);
             map.put(coordinate, supplier.get());
         }
