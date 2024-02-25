@@ -1,21 +1,21 @@
 package org.example.view;
 
 import org.example.model.entity.*;
-import org.example.model.map.Map;
+import org.example.model.map.GameMap;
 
 public abstract class MapView implements View {
-    private final Map map;
-    public MapView(Map map) {
-        this.map = map;
+    private final GameMap gameMap;
+    public MapView(GameMap gameMap) {
+        this.gameMap = gameMap;
     }
     @Override
     public void show() {
-        for (int row = 0; row < map.rows(); row++) {
-            for (int column = 0; column < map.columns(); column++) {
-                if (map.isEmpty(row, column)) {
+        for (int row = 0; row < gameMap.rows(); row++) {
+            for (int column = 0; column < gameMap.columns(); column++) {
+                if (gameMap.isEmpty(row, column)) {
                     showGround();
                 } else {
-                    Entity entity = map.get(row, column);
+                    Entity entity = gameMap.get(row, column);
                     showEntity(entity);
                 }
             }

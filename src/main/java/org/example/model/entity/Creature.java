@@ -1,19 +1,18 @@
 package org.example.model.entity;
 
-import org.example.controller.MainTestWay;
 import org.example.model.map.Coordinate;
-import org.example.model.map.Map;
+import org.example.model.map.GameMap;
 
 import java.util.*;
 
 public abstract class Creature implements Entity {
 
-    protected final Map map;
+    protected final GameMap gameMap;
     protected final int speed;
     protected int hp;
 
-    public Creature(Map map, int speed, int hp) {
-        this.map = map;
+    public Creature(GameMap gameMap, int speed, int hp) {
+        this.gameMap = gameMap;
         this.speed = speed;
         this.hp = hp;
     }
@@ -31,7 +30,7 @@ public abstract class Creature implements Entity {
     }
 
     public void makeMove() {
-        Coordinate coordinate = map.coordinate(this);
+        Coordinate coordinate = gameMap.coordinate(this);
         Node current = new Node(coordinate);
         Set<Node> reachable = new HashSet<>();
         reachable.add(current);
@@ -51,8 +50,8 @@ public abstract class Creature implements Entity {
             count--;
         }
 
-        map.remove(coordinate);
-        map.put(step, this);
+        gameMap.remove(coordinate);
+        gameMap.put(step, this);
     }
 
     private final static int[][] DIRECTIONS = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
@@ -93,23 +92,23 @@ public abstract class Creature implements Entity {
     }
 
     private boolean isTarget(Coordinate coordinate) {
-        if (map.isEmpty(coordinate)) {
+        if (gameMap.isEmpty(coordinate)) {
             return false;
         }
-        return isFood(map.get(coordinate));
+        return isFood(gameMap.get(coordinate));
     }
 
     private boolean isCorrect(int row, int column) {
-        if (row < 0 || row >= map.rows() || column < 0 || column >= map.columns()) {
+        if (row < 0 || row >= gameMap.rows() || column < 0 || column >= gameMap.columns()) {
             return false;
         }
 
         Coordinate coordinate = new Coordinate(row, column);
 
-        if (map.isEmpty(coordinate)) {
+        if (gameMap.isEmpty(coordinate)) {
             return true;
         }
-        return isFood(map.get(coordinate));
+        return isFood(gameMap.get(coordinate));
     }
 
 

@@ -1,4 +1,8 @@
-package org.example.model.map;
+package org.example.model.map.hash_game_map;
+
+import org.example.model.entity.Entity;
+import org.example.model.map.Coordinate;
+import org.example.model.map.GameMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,23 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 //do not use for enums
-public class BaseHashBoard<T> implements HashBoard<T> {
+public class HashGameMap implements GameMap {
     private static final String NOT_FOUND = "not found: ";
     private static final String NOT_FOUND_AT_COORDINATE = "not found at row %d, column %d";
     private static final String ILLEGAL_COORDINATE = "illegal row %d, column %d";
     private final int rows;
     private final int columns;
 
-    protected final Map<T, Coordinate> coordinates = new HashMap<>();
-    protected final Map<Coordinate, T> values = new HashMap<>();
+    protected final Map<Entity, Coordinate> coordinates = new HashMap<>();
+    protected final Map<Coordinate, Entity> values = new HashMap<>();
 
-    public BaseHashBoard(int rows, int columns) {
+    public HashGameMap(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
     }
 
     @Override
-    public Coordinate coordinate(T value) {
+    public Coordinate coordinate(Entity value) {
         Coordinate coordinate = coordinates.get(value);
         if (coordinate == null) {
             throw new IllegalArgumentException(NOT_FOUND + value);
@@ -41,12 +45,12 @@ public class BaseHashBoard<T> implements HashBoard<T> {
     }
 
     @Override
-    public void put(int row, int column, T value) {
+    public void put(int row, int column, Entity value) {
         put(new Coordinate(row, column), value);
     }
 
     @Override
-    public void put(Coordinate coordinate, T value) {
+    public void put(Coordinate coordinate, Entity value) {
         if (!inRange(coordinate)) {
             String message = String.format(ILLEGAL_COORDINATE, coordinate.row, coordinate.column);
             throw new IllegalArgumentException(message);
@@ -61,13 +65,13 @@ public class BaseHashBoard<T> implements HashBoard<T> {
     }
 
     @Override
-    public T get(int row, int column) {
+    public Entity get(int row, int column) {
         return get(new Coordinate(row, column));
     }
 
     @Override
-    public T get(Coordinate coordinate) {
-        T value = values.get(coordinate);
+    public Entity get(Coordinate coordinate) {
+        Entity value = values.get(coordinate);
         if (value == null) {
             String message = String.format(NOT_FOUND_AT_COORDINATE, coordinate.row, coordinate.column);
             throw new IllegalArgumentException(message);
@@ -77,17 +81,17 @@ public class BaseHashBoard<T> implements HashBoard<T> {
     }
 
     @Override
-    public T remove(int row, int column) {
+    public Entity remove(int row, int column) {
         return remove(new Coordinate(row, column));
     }
 
     @Override
-    public T remove(Coordinate coordinate) {
+    public Entity remove(Coordinate coordinate) {
         if (!values.containsKey(coordinate)) {
             String message = String.format(NOT_FOUND_AT_COORDINATE, coordinate.row, coordinate.column);
             throw new IllegalArgumentException(message);
         }
-        T value = values.remove(coordinate);
+        Entity value = values.remove(coordinate);
         coordinates.remove(value);
         return value;
     }
@@ -103,7 +107,7 @@ public class BaseHashBoard<T> implements HashBoard<T> {
     }
 
     @Override
-    public List<T> values() {
+    public List<Entity> values() {
         return new ArrayList<>(values.values());
     }
 
@@ -111,5 +115,10 @@ public class BaseHashBoard<T> implements HashBoard<T> {
         int row = coordinate.row;
         int column = coordinate.column;
         return row >= 0 && row < rows && column >= 0 && column < columns;
+    }
+
+    @Override
+    public boolean contains(Entity value) {
+        return values.containsValue(value);
     }
 }

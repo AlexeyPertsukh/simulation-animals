@@ -1,8 +1,9 @@
 package org.example.controller.actions;
 
-import org.example.model.Simulation;
+import org.example.controller.Simulation;
 import org.example.model.entity.Creature;
 import org.example.model.entity.Entity;
+import org.example.model.map.GameMap;
 
 import java.util.List;
 
@@ -16,8 +17,12 @@ public class TurnActions implements Actions{
 
     @Override
     public void execute() {
-        List<Entity> entities = simulation.getMap().values();
+        GameMap map = simulation.getMap();
+        List<Entity> entities = map.values();
         for (Entity entity : entities  ) {
+            if(!map.contains(entity)) {
+                continue;
+            }
             if(isCreature(entity)) {
                 Creature creature = (Creature) entity;
                 creature.makeMove();

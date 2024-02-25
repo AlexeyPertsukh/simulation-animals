@@ -1,55 +1,47 @@
 package org.example.controller;
 
-import org.example.controller.view_factory.EmojiViewFactory;
 import org.example.controller.view_factory.TextViewFactory;
 import org.example.controller.view_factory.ViewFactory;
-import org.example.model.Simulation;
 import org.example.model.entity.Grass;
 import org.example.model.entity.Herbivore;
 import org.example.model.entity.Rock;
-import org.example.model.map.Map;
-import org.example.model.map_factory.BasicRandomMapFactory;
-import org.example.model.map_factory.OneHerbivoreFixMapFactory;
+import org.example.model.map.GameMap;
+import org.example.model.map.hash_game_map.HashGameMap;
 
 public class MainTest {
     public static void main(String[] args) {
-        Map map = map();
+        GameMap gameMap = map();
 //        ViewFactory viewFactory = new EmojiViewFactory();
         ViewFactory viewFactory = new TextViewFactory();
 
-        Simulation simulation = new Simulation(map, viewFactory, 1500);
+        Simulation simulation = new Simulation(gameMap, viewFactory, 1500);
         simulation.startSimulation();
 
     }
 
-    private static Map map() {
-        Map map = new Map(10, 20);
+    private static GameMap map() {
+        GameMap gameMap = new HashGameMap(10, 20);
 
-        map.put(2,3,new Grass());
-        map.put(0,0,new Grass());
-        map.put(0,19,new Grass());
+        gameMap.put(2,3,new Grass());
+        gameMap.put(0,0,new Grass());
+        gameMap.put(0,19,new Grass());
 //        map.put(8,40,new Grass());
 
-        map.put(1,1,new Rock());
-        map.put(5,5,new Herbivore(map));
-        map.put(5,19,new Herbivore(map));
+        gameMap.put(1,1,new Rock());
+        gameMap.put(5,5,new Herbivore(gameMap));
+        gameMap.put(5,19,new Herbivore(gameMap));
 
-        map.put(2,3,new Grass());
-        map.put(0,0,new Grass());
-        map.put(0,19,new Grass());
+        gameMap.put(2,3,new Grass());
+        gameMap.put(0,0,new Grass());
+        gameMap.put(0,19,new Grass());
 
-        map.put(1,1,new Rock());
-        map.put(5,5,new Herbivore(map));
-        map.put(5,19,new Herbivore(map));
+        gameMap.put(1,1,new Rock());
+        gameMap.put(5,5,new Herbivore(gameMap));
+        gameMap.put(5,19,new Herbivore(gameMap));
 
-        map.put(0,0,new Grass());
+        gameMap.put(0,0,new Grass());
 
-        return map;
+        return gameMap;
     }
 
-//    private static Map map() {
-//        Map map = new Map(2, 2);
-//        map.put(1, 1, new Herbivore(map));
-//        return map;
-//    }
 }

@@ -1,8 +1,6 @@
 package org.example.view;
 
-import org.example.model.map.Map;
-
-import java.util.function.Supplier;
+import org.example.model.map.GameMap;
 
 public class TextMapView extends MapView {
     private final static String GROUND = ".";
@@ -12,8 +10,8 @@ public class TextMapView extends MapView {
     private final static String HERBIVORE = "H";
     private final static String PREDATOR = "P";
 
-    public TextMapView(Map map) {
-        super(map);
+    public TextMapView(GameMap gameMap) {
+        super(gameMap);
     }
 
     @Override

@@ -22,4 +22,6 @@ public interface Board<T> {
     boolean isEmpty(int row, int column);
 
     boolean isEmpty(Coordinate coordinate);
+
+    boolean contains(T value);
 }

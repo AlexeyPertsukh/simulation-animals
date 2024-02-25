@@ -1,25 +1,13 @@
 package org.example.controller.view_factory;
 
-import org.example.model.map.Map;
+import org.example.model.map.GameMap;
 import org.example.view.EmojiMapView;
-import org.example.view.TextView;
 import org.example.view.View;
 
-import java.util.function.Supplier;
-
-public class EmojiViewFactory implements ViewFactory{
+public class EmojiViewFactory extends AbstractViewFactory{
     @Override
-    public View viewMap(Map map) {
-        return new EmojiMapView(map);
+    public View viewMap(GameMap gameMap) {
+        return new EmojiMapView(gameMap);
     }
 
-    @Override
-    public View textView(String text) {
-        return new TextView(text);
-    }
-
-    @Override
-    public View textView(int num) {
-        return new TextView(String.valueOf(num));
-    }
 }
