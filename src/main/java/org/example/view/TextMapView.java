@@ -2,6 +2,8 @@ package org.example.view;
 
 import org.example.model.map.Map;
 
+import java.util.function.Supplier;
+
 public class TextMapView extends MapView {
     private final static String GROUND = ".";
     private final static String TREE = "8";
@@ -9,7 +11,6 @@ public class TextMapView extends MapView {
     private final static String GRASS = "*";
     private final static String HERBIVORE = "H";
     private final static String PREDATOR = "P";
-
 
     public TextMapView(Map map) {
         super(map);

@@ -1,5 +1,7 @@
 package org.example.model.entity;
 
+import org.example.model.map.Map;
+
 public class Predator extends Creature{
     private final static int SPEED = 2;
     private final static int HP = 4;
@@ -9,7 +11,7 @@ public class Predator extends Creature{
     }
 
     @Override
-    public void makeMove() {
+    public void makeMove(Map map) {
 
     }
 }

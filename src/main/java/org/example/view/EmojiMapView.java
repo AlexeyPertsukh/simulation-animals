@@ -1,17 +1,15 @@
 package org.example.view;
 
-import org.example.model.entity.Entity;
-import org.example.model.entity.Herbivore;
-import org.example.model.entity.Predator;
-import org.example.model.entity.StaticUnit;
 import org.example.model.map.Map;
 
-import java.util.HashMap;
+import java.util.function.Supplier;
 
 public class EmojiMapView extends MapView {
     private final static String GROUND = "\uD83D\uDFEB";
-    private final static String TREE = "\uD83C\uDF32";
+//    private final static String TREE = "\uD83C\uDF32";
+    private final static String TREE = "\uD83C\uDF34️";
     private final static String ROCK = "\uD83D\uDD3A";
+//    private final static String ROCK = "\uD83D\uDFE4";
     private final static String GRASS = "\uD83C\uDF40";
     private final static String HERBIVORE = "\uD83D\uDC30";
     private final static String PREDATOR = "\uD83D\uDC2F";

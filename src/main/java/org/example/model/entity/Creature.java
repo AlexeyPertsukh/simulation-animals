@@ -1,5 +1,7 @@
 package org.example.model.entity;
 
+import org.example.model.map.Map;
+
 public abstract class Creature implements Entity{
     protected final int speed;
     protected int hp;
@@ -21,5 +23,5 @@ public abstract class Creature implements Entity{
         this.hp = hp;
     }
 
-    public abstract void makeMove();
+    public abstract void makeMove(Map map);
 }

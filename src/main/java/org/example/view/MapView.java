@@ -3,17 +3,16 @@ package org.example.view;
 import org.example.model.entity.Entity;
 import org.example.model.entity.Herbivore;
 import org.example.model.entity.Predator;
-import org.example.model.entity.StaticUnit;
+import org.example.model.entity.StaticEntity;
 import org.example.model.map.Map;
 
+import java.util.function.Supplier;
+
 public abstract class MapView implements View {
-
     private final Map map;
-
     public MapView(Map map) {
         this.map = map;
     }
-
     @Override
     public void show() {
         for (int row = 0; row < map.rows(); row++) {
@@ -47,8 +46,8 @@ public abstract class MapView implements View {
             return herbivore();
         }
 
-        if(entity instanceof StaticUnit) {
-            StaticUnit unit = (StaticUnit) entity;
+        if(entity instanceof StaticEntity) {
+            StaticEntity unit = (StaticEntity) entity;
             switch (unit) {
                 case GRASS: return grass();
                 case TREE: return tree();
