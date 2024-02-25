@@ -1,11 +1,11 @@
 package org.example.model.map;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//do not use for enums
 public class BaseHashBoard<T> implements HashBoard<T> {
     private static final String NOT_FOUND = "not found: ";
     private static final String NOT_FOUND_AT_COORDINATE = "not found at row %d, column %d";

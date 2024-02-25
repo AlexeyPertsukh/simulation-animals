@@ -16,10 +16,9 @@ public class OneHerbivoreFixMapFactory implements MapFactory {
     public Map create() {
         Map map = new Map(ROWS, COLUMNS);
 
-        map.put(0,40,new Grass());
         map.put(2,3,new Grass());
         map.put(0,0,new Grass());
-//        map.put(3,3,StaticEntity.GRASS);
+        map.put(0,40,new Grass());
 
         map.put(1,1,new Rock());
         map.put(5,5,new Herbivore(map));

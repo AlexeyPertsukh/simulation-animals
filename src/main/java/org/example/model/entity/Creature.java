@@ -41,7 +41,7 @@ public abstract class Creature implements Entity {
 
     protected List<Coordinate> foodCoordinates() {
         List<Entity> entities = map.values();
-//        entities.forEach(n -> System.out.println("!!! " + n));
+        entities.forEach(n -> System.out.println("!!! " + n));
         List<Coordinate> coordinates = new ArrayList<>();
         for (Entity entity : entities) {
             if (isFood(entity)) {
@@ -49,7 +49,7 @@ public abstract class Creature implements Entity {
                 coordinates.add(coordinate);
             }
         }
-//        coordinates.forEach(v -> System.out.println("!!! " + v));
+        coordinates.forEach(v -> System.out.println("!!! " + v));
         return coordinates;
     }
 
