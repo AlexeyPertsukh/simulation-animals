@@ -14,11 +14,9 @@ public class Herbivore extends Creature {
         super(map, SPEED, HP);
     }
 
-
-
     @Override
     protected boolean isFood(Entity entity) {
-            return entity == StaticEntity.GRASS;
+            return entity instanceof Grass;
     }
 
 

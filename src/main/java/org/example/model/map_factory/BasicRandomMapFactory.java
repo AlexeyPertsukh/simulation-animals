@@ -1,9 +1,6 @@
 package org.example.model.map_factory;
 
-import org.example.model.entity.Entity;
-import org.example.model.entity.Herbivore;
-import org.example.model.entity.Predator;
-import org.example.model.entity.StaticEntity;
+import org.example.model.entity.*;
 import org.example.model.map.Coordinate;
 import org.example.model.map.Map;
 
@@ -34,9 +31,9 @@ public class BasicRandomMapFactory implements MapFactory {
         int numRock = size * PERCENT_ROCK / 100;
         int numTree = size * PERCENT_TREE / 100;
 
-        putEntity(map, coordinates, numGrass, () -> StaticEntity.GRASS);
-        putEntity(map, coordinates, numRock, () -> StaticEntity.ROCK);
-        putEntity(map, coordinates, numTree, () -> StaticEntity.TREE);
+        putEntity(map, coordinates, numGrass, Grass::new);
+        putEntity(map, coordinates, numRock, Rock::new);
+        putEntity(map, coordinates, numTree, Tree::new);
         putEntity(map, coordinates, NUM_HERBIVORE, () -> new Herbivore(map));
         putEntity(map, coordinates, NUM_PREDATOR, () -> new Predator(map));
 

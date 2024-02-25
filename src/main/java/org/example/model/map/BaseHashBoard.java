@@ -4,7 +4,7 @@ package org.example.model.map;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseBoard<T> implements Board<T> {
+public class BaseHashBoard<T> implements Board<T> {
     private static final String NOT_FOUND = "not found: ";
     private static final String NOT_FOUND_AT_COORDINATE = "not found at row %d, column %d";
     private static final String ILLEGAL_COORDINATE = "illegal row %d, column %d";
@@ -14,7 +14,7 @@ public class BaseBoard<T> implements Board<T> {
     protected final Map<T, Coordinate> coordinates = new HashMap<>();
     protected final Map<Coordinate, T> values = new HashMap<>();
 
-    public BaseBoard(int rows, int columns) {
+    public BaseHashBoard(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
     }
@@ -45,10 +45,15 @@ public class BaseBoard<T> implements Board<T> {
 
     @Override
     public void put(Coordinate coordinate, T value) {
-        if(!inRange(coordinate)) {
+        if (!inRange(coordinate)) {
             String message = String.format(ILLEGAL_COORDINATE, coordinate.row, coordinate.column);
             throw new IllegalArgumentException(message);
         }
+
+        if (coordinates.containsKey(value)) {
+            throw new IllegalArgumentException("the object is already on the board: " + value.toString());
+        }
+
         coordinates.put(value, coordinate);
         values.put(coordinate, value);
     }

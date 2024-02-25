@@ -1,5 +1,5 @@
 package org.example.model.entity;
 
-public class Grass implements Entity{
+public class Rock implements Entity{
 
 }

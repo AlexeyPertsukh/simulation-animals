@@ -1,12 +1,7 @@
 package org.example.view;
 
-import org.example.model.entity.Entity;
-import org.example.model.entity.Herbivore;
-import org.example.model.entity.Predator;
-import org.example.model.entity.StaticEntity;
+import org.example.model.entity.*;
 import org.example.model.map.Map;
-
-import java.util.function.Supplier;
 
 public abstract class MapView implements View {
     private final Map map;
@@ -46,15 +41,18 @@ public abstract class MapView implements View {
             return herbivore();
         }
 
-        if(entity instanceof StaticEntity) {
-            StaticEntity unit = (StaticEntity) entity;
-            switch (unit) {
-                case GRASS: return grass();
-                case TREE: return tree();
-                case ROCK: return rock();
-                default: throw new IllegalArgumentException();
-            }
+        if(entity instanceof Grass) {
+            return grass();
         }
+
+        if(entity instanceof Tree) {
+            return tree();
+        }
+
+        if(entity instanceof Rock) {
+            return rock();
+        }
+
         throw new IllegalArgumentException();
     }
 

@@ -41,7 +41,7 @@ public abstract class Creature implements Entity {
 
     protected List<Coordinate> foodCoordinates() {
         List<Entity> entities = map.entities();
-        entities.forEach(n -> System.out.println("!!! " + n));
+//        entities.forEach(n -> System.out.println("!!! " + n));
         List<Coordinate> coordinates = new ArrayList<>();
         for (Entity entity : entities) {
             if (isFood(entity)) {
@@ -49,16 +49,16 @@ public abstract class Creature implements Entity {
                 coordinates.add(coordinate);
             }
         }
-        coordinates.forEach(v -> System.out.println("!!! " + v));
+//        coordinates.forEach(v -> System.out.println("!!! " + v));
         return coordinates;
     }
 
     private Coordinate nearest(List<Coordinate> coordinates, Coordinate from) {
         Comparator<Coordinate> comparator = new CoordinateComparator(from);
-        coordinates.forEach(System.out::println);
-        System.out.println("---");
+//        coordinates.forEach(System.out::println);
+//        System.out.println("---");
         coordinates.sort(comparator);
-        coordinates.forEach(System.out::println);
+//        coordinates.forEach(System.out::println);
         return coordinates.get(0);
     }
 
@@ -80,7 +80,6 @@ public abstract class Creature implements Entity {
     private boolean isFoodNear(Coordinate me, Coordinate food) {
         return Math.abs(me.row - food.row) == 1 || Math.abs(me.column - food.column) == 1;
     }
-
 
     protected abstract boolean isFood(Entity entity);
 
