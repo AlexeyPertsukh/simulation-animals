@@ -24,4 +24,16 @@ public class ArrayGameMap extends ArrayBoard<Entity> implements GameMap {
         }
         return values;
     }
+
+    @Override
+    public boolean contains(Entity value) {
+        for (int row = 0; row < rows(); row++) {
+            for (int column = 0; column < columns(); column++) {
+                if(values[row][column] == value) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

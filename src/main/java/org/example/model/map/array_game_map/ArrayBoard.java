@@ -90,15 +90,4 @@ public class ArrayBoard<T> implements Board<T> {
         return isEmpty(coordinate.row, coordinate.column);
     }
 
-    @Override
-    public boolean contains(T value) {
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                if(values[row][column] == value) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }

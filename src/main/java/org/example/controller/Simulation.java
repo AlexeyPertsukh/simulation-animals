@@ -31,9 +31,15 @@ public class Simulation {
 
     public void startSimulation() {
         while (true) {
-            show();
-            turn.execute();
+
+            List<Entity> entities = gameMap.values();
+            Statistic statistic = statistic(entities);
+            show(statistic);
             sleep();
+            if(isEndSimulation(statistic)) {
+                break;
+            }
+            turn.execute();
         }
     }
 
@@ -49,28 +55,37 @@ public class Simulation {
 
     }
 
-    public void show() {
-        List<Entity> entities = gameMap.values();
-        int numGrasses = 0;
-        int numHerbivores = 0;
-        int numPredators = 0;
+    public void show(Statistic statistic) {
+        mapView.show();
+        viewFactory.info(step++, statistic.numGrasses, statistic.numHerbivores, statistic.numPredators).show();
+    }
 
+    private Statistic statistic(List<Entity> entities) {
+        Statistic statistic = new Statistic();
         for (Entity entity : entities) {
             if (entity instanceof Grass) {
-                numGrasses++;
+                statistic.numGrasses++;
             } else if (entity instanceof Herbivore) {
-                numHerbivores++;
+                statistic.numHerbivores++;
             } else if (entity instanceof Predator) {
-                numPredators++;
+                statistic.numPredators++;
             }
         }
+        return statistic;
+    }
 
-
-        mapView.show();
-        viewFactory.info(step++, numGrasses, numHerbivores, numPredators).show();
+    private boolean isEndSimulation(Statistic statistic) {
+        return statistic.numHerbivores == 0;
     }
 
     public GameMap getMap() {
         return gameMap;
     }
+
+    private static class Statistic {
+        int numGrasses;
+        int numHerbivores;
+        int numPredators;
+    }
+
 }

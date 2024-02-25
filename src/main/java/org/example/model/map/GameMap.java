@@ -7,4 +7,6 @@ import java.util.List;
 public interface GameMap extends Board<Entity> {
     List<Entity> values();
 
+    boolean contains(Entity value);
+
 }

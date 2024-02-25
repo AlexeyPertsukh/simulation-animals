@@ -39,13 +39,13 @@ public abstract class Creature implements Entity {
             return;
         }
         Stack<Coordinate> stack = new Stack<>();
-        while (wayNode != null) {
+        while (wayNode != current) {
             stack.push(wayNode.coordinate);
             wayNode = wayNode.prev;
         }
         int count = speed;
         Coordinate step = null;
-        while (!stack.isEmpty() && count>0) {
+        while (!stack.isEmpty() && count > 0) {
             step = stack.pop();
             count--;
         }
@@ -80,7 +80,7 @@ public abstract class Creature implements Entity {
             }
             Coordinate coordinate = new Coordinate(row, column);
             Node current = new Node(node, coordinate);
-            if(explored.contains(current)) {
+            if (explored.contains(current)) {
                 continue;
             }
             if (isTarget(coordinate)) {

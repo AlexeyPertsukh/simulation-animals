@@ -11,15 +11,15 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class BasicRandomMapFactory implements MapFactory {
-    private final static int ROWS = 10;
-    private final static int COLUMNS = 50;
+    private final static int ROWS = 12;
+    private final static int COLUMNS = 60;
     private final static int PERCENT_GRASS = 6;
     private final static int PERCENT_TREE = 6;
     private final static int PERCENT_ROCK = 9;
 //    private final static int NUM_HERBIVORE = 11;
-    private final static int NUM_HERBIVORE = 4;
+    private final static int NUM_HERBIVORE = 18;
 //    private final static int NUM_PREDATOR = 7;
-    private final static int NUM_PREDATOR = 3;
+    private final static int NUM_PREDATOR = 5;
     private final Random random = new Random();
 
     @Override

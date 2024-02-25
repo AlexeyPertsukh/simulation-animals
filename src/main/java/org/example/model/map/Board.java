@@ -23,5 +23,4 @@ public interface Board<T> {
 
     boolean isEmpty(Coordinate coordinate);
 
-    boolean contains(T value);
 }
