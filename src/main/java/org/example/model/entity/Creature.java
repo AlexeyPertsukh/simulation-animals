@@ -31,13 +31,11 @@ public abstract class Creature implements Entity {
     }
 
     public void makeMove() {
-        System.out.println("!!! 1 ");
         Coordinate coordinate = map.coordinate(this);
         Node current = new Node(coordinate);
         Set<Node> reachable = new HashSet<>();
         reachable.add(current);
         Node wayNode = find(new HashSet<>(), reachable);
-        System.out.println("!!! 11 ");
         if (wayNode == null) {
             return;
         }
@@ -55,7 +53,6 @@ public abstract class Creature implements Entity {
 
         map.remove(coordinate);
         map.put(step, this);
-        System.out.println("!!! 2");
     }
 
     private final static int[][] DIRECTIONS = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
@@ -84,11 +81,13 @@ public abstract class Creature implements Entity {
             }
             Coordinate coordinate = new Coordinate(row, column);
             Node current = new Node(node, coordinate);
+            if(explored.contains(current)) {
+                continue;
+            }
             if (isTarget(coordinate)) {
                 return current;
             }
             reachable.add(current);
-
         }
         return null;
     }
@@ -105,10 +104,12 @@ public abstract class Creature implements Entity {
             return false;
         }
 
-        if (map.isEmpty(row, column)) {
+        Coordinate coordinate = new Coordinate(row, column);
+
+        if (map.isEmpty(coordinate)) {
             return true;
         }
-        return isFood(map.get(row, column));
+        return isFood(map.get(coordinate));
     }
 
 

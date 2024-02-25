@@ -17,7 +17,7 @@ public class MainTest {
 //        ViewFactory viewFactory = new EmojiViewFactory();
         ViewFactory viewFactory = new TextViewFactory();
 
-        Simulation simulation = new Simulation(map, viewFactory, 500);
+        Simulation simulation = new Simulation(map, viewFactory, 1500);
         simulation.startSimulation();
 
     }
@@ -34,6 +34,22 @@ public class MainTest {
         map.put(5,5,new Herbivore(map));
         map.put(5,19,new Herbivore(map));
 
+        map.put(2,3,new Grass());
+        map.put(0,0,new Grass());
+        map.put(0,19,new Grass());
+
+        map.put(1,1,new Rock());
+        map.put(5,5,new Herbivore(map));
+        map.put(5,19,new Herbivore(map));
+
+        map.put(0,0,new Grass());
+
         return map;
     }
+
+//    private static Map map() {
+//        Map map = new Map(2, 2);
+//        map.put(1, 1, new Herbivore(map));
+//        return map;
+//    }
 }
