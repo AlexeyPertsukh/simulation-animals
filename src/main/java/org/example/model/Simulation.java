@@ -9,15 +9,17 @@ import org.example.view.View;
 public class Simulation {
     private final Map map;
     private final ViewFactory viewFactory;
+    private final int sleepTime;
     private int step = 1;
     private View mapView;
     private final Actions turn;
 
 
 
-    public Simulation(Map map, ViewFactory viewFactory) {
+    public Simulation(Map map, ViewFactory viewFactory, int sleepTime) {
         this.map = map;
         this.viewFactory = viewFactory;
+        this.sleepTime = sleepTime;
         mapView = viewFactory.viewMap(map);
         turn= new TurnActions(this);
     }
@@ -32,7 +34,7 @@ public class Simulation {
 
     private void sleep() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

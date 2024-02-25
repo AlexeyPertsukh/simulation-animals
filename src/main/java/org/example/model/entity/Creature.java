@@ -1,11 +1,10 @@
 package org.example.model.entity;
 
+import org.example.controller.MainTestWay;
 import org.example.model.map.Coordinate;
 import org.example.model.map.Map;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public abstract class Creature implements Entity {
 
@@ -32,50 +31,86 @@ public abstract class Creature implements Entity {
     }
 
     public void makeMove() {
-        Coordinate me = map.coordinate(this);
-        List<Coordinate> foodCoordinates = foodCoordinates();
-        Coordinate nearest = nearest(foodCoordinates, me);
-        System.out.printf("!!!! [%d, %d]%n \n", nearest.row, nearest.column);
+        System.out.println("!!! 1 ");
+        Coordinate coordinate = map.coordinate(this);
+        Node current = new Node(coordinate);
+        Set<Node> reachable = new HashSet<>();
+        reachable.add(current);
+        Node wayNode = find(new HashSet<>(), reachable);
+        System.out.println("!!! 11 ");
+        if (wayNode == null) {
+            return;
+        }
+        Stack<Coordinate> stack = new Stack<>();
+        while (wayNode != null) {
+            stack.push(wayNode.coordinate);
+            wayNode = wayNode.prev;
+        }
+        int count = speed;
+        Coordinate step = null;
+        while (!stack.isEmpty() && count>0) {
+            step = stack.pop();
+            count--;
+        }
 
+        map.remove(coordinate);
+        map.put(step, this);
+        System.out.println("!!! 2");
     }
 
-    protected List<Coordinate> foodCoordinates() {
-        List<Entity> entities = map.values();
-        entities.forEach(n -> System.out.println("!!! " + n));
-        List<Coordinate> coordinates = new ArrayList<>();
-        for (Entity entity : entities) {
-            if (isFood(entity)) {
-                Coordinate coordinate = (map.coordinate(entity));
-                coordinates.add(coordinate);
+    private final static int[][] DIRECTIONS = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+    private Node find(Set<Node> explored, Set<Node> reachable) {
+        while (!reachable.isEmpty()) {
+            Node[] nodes = reachable.toArray(new Node[0]);
+            for (Node node : nodes) {
+                Node result = find(explored, reachable, node);
+                if (result != null) {
+                    return result;
+                }
+                reachable.remove(node);
+                explored.add(node);
             }
         }
-        coordinates.forEach(v -> System.out.println("!!! " + v));
-        return coordinates;
+        return null;
     }
 
-    private Coordinate nearest(List<Coordinate> coordinates, Coordinate from) {
-        Comparator<Coordinate> comparator = new CoordinateComparator(from);
-//        coordinates.forEach(System.out::println);
-//        System.out.println("---");
-        coordinates.sort(comparator);
-//        coordinates.forEach(System.out::println);
-        return coordinates.get(0);
-    }
-
-    private List<Coordinate> way(Coordinate from, Coordinate to) {
-        List<Coordinate> way = new ArrayList<>();
-        Coordinate current = from;
-        while (!isFoodNear(current, to)) {
+    private Node find(Set<Node> explored, Set<Node> reachable, Node node) {
+        for (int[] offset : DIRECTIONS) {
+            int row = node.coordinate.row + offset[0];
+            int column = node.coordinate.column + offset[1];
+            if (!isCorrect(row, column)) {
+                continue;
+            }
+            Coordinate coordinate = new Coordinate(row, column);
+            Node current = new Node(node, coordinate);
+            if (isTarget(coordinate)) {
+                return current;
+            }
+            reachable.add(current);
 
         }
-        return way;
+        return null;
     }
 
-//    private static final int[][] steps = {1,}
-//    private Coordinate next(Coordinate from, Coordinate to) {
-//        int row = Math.max(from.row, to.row) - Math.min(from.row, to.row);
-//        int column = Math.max(from.column, to.column) - Math.min(from.column, to.column);
-//    }
+    private boolean isTarget(Coordinate coordinate) {
+        if (map.isEmpty(coordinate)) {
+            return false;
+        }
+        return isFood(map.get(coordinate));
+    }
+
+    private boolean isCorrect(int row, int column) {
+        if (row < 0 || row >= map.rows() || column < 0 || column >= map.columns()) {
+            return false;
+        }
+
+        if (map.isEmpty(row, column)) {
+            return true;
+        }
+        return isFood(map.get(row, column));
+    }
+
 
     private boolean isFoodNear(Coordinate me, Coordinate food) {
         return Math.abs(me.row - food.row) == 1 || Math.abs(me.column - food.column) == 1;
@@ -83,21 +118,40 @@ public abstract class Creature implements Entity {
 
     protected abstract boolean isFood(Entity entity);
 
-    private static class CoordinateComparator implements Comparator<Coordinate> {
-        private final Coordinate from;
+    private static class Node {
+        final Node prev;
+        final Coordinate coordinate;
 
-        public CoordinateComparator(Coordinate from) {
-            this.from = from;
+        public Node(Node prev, Coordinate coordinate) {
+            this.prev = prev;
+            this.coordinate = coordinate;
+        }
+
+        public Node(Coordinate coordinate) {
+            this(null, coordinate);
         }
 
         @Override
-        public int compare(Coordinate first, Coordinate second) {
-            return distance(from, first) - distance(from, second);
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return Objects.equals(coordinate, node.coordinate);
         }
 
-        private static int distance(Coordinate from, Coordinate to) {
-            return Math.abs(from.row - to.row) + Math.abs(from.column - to.column);
+        @Override
+        public int hashCode() {
+            return Objects.hash(coordinate);
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "prev=" + prev +
+                    ", coordinate=" + coordinate +
+                    '}';
         }
     }
+
 
 }

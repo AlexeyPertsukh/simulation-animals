@@ -11,7 +11,7 @@ public class Main {
         Map map = (new BasicRandomMapFactory()).create();
         ViewFactory viewFactory = new EmojiViewFactory();
 
-        Simulation simulation = new Simulation(map, viewFactory);
+        Simulation simulation = new Simulation(map, viewFactory, 1000);
         simulation.startSimulation();
 
     }
