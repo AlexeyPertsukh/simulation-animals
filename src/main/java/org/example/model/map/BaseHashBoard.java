@@ -1,10 +1,12 @@
 package org.example.model.map;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class BaseHashBoard<T> implements Board<T> {
+public class BaseHashBoard<T> implements HashBoard<T> {
     private static final String NOT_FOUND = "not found: ";
     private static final String NOT_FOUND_AT_COORDINATE = "not found at row %d, column %d";
     private static final String ILLEGAL_COORDINATE = "illegal row %d, column %d";
@@ -98,6 +100,11 @@ public class BaseHashBoard<T> implements Board<T> {
     @Override
     public boolean isEmpty(Coordinate coordinate) {
         return !values.containsKey(coordinate);
+    }
+
+    @Override
+    public List<T> values() {
+        return new ArrayList<>(values.values());
     }
 
     private boolean inRange(Coordinate coordinate) {

@@ -16,7 +16,7 @@ public class TurnActions implements Actions{
 
     @Override
     public void execute() {
-        List<Entity> entities = simulation.getMap().entities();
+        List<Entity> entities = simulation.getMap().values();
         for (Entity entity : entities  ) {
             if(isCreature(entity)) {
                 Creature creature = (Creature) entity;

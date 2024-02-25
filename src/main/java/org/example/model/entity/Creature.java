@@ -40,7 +40,7 @@ public abstract class Creature implements Entity {
     }
 
     protected List<Coordinate> foodCoordinates() {
-        List<Entity> entities = map.entities();
+        List<Entity> entities = map.values();
 //        entities.forEach(n -> System.out.println("!!! " + n));
         List<Coordinate> coordinates = new ArrayList<>();
         for (Entity entity : entities) {

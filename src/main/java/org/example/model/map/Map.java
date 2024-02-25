@@ -10,11 +10,4 @@ public class Map extends BaseHashBoard<Entity> {
         super(rows, columns);
     }
 
-    public List<Coordinate> coordinates() {
-        return new ArrayList<>(coordinates.values());
-    }
-
-    public List<Entity> entities() {
-        return new ArrayList<>(values.values());
-    }
 }
