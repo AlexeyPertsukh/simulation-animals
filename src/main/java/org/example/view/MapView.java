@@ -4,7 +4,7 @@ import org.example.model.entity.*;
 import org.example.model.map.GameMap;
 
 public abstract class MapView implements View {
-    private final GameMap gameMap;
+    protected final GameMap gameMap;
     public MapView(GameMap gameMap) {
         this.gameMap = gameMap;
     }
@@ -23,11 +23,11 @@ public abstract class MapView implements View {
         }
     }
 
-    private void showGround() {
+    protected void showGround() {
         System.out.print(ground());
     }
 
-    private void showEntity(Entity entity) {
+    protected void showEntity(Entity entity) {
         String pic = picture(entity);
         System.out.print(pic);
     }

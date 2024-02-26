@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.controller.view_factory.TextViewFactory;
+import org.example.controller.view_factory.ColorTextViewFactory;
 import org.example.controller.view_factory.ViewFactory;
 import org.example.model.entity.Grass;
 import org.example.model.entity.Herbivore;
@@ -12,7 +12,7 @@ public class MainTest {
     public static void main(String[] args) {
         GameMap gameMap = map();
 //        ViewFactory viewFactory = new EmojiViewFactory();
-        ViewFactory viewFactory = new TextViewFactory();
+        ViewFactory viewFactory = new ColorTextViewFactory();
 
         Simulation simulation = new Simulation(gameMap, viewFactory, 1500);
         simulation.startSimulation();
