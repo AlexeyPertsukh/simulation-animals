@@ -11,7 +11,7 @@ public class MainText {
                 8,
                 40,
                 10,
-                10,
+                16,
                 10,
                 15,
                 3)).create();

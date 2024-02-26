@@ -6,7 +6,7 @@ import org.example.model.map.GameMap;
 public class ColorTextMapView extends TextMapView implements ColorView{
     private final static Color COLOR_GRASS = Color.GREEN;
     private final static Color COLOR_TREE = Color.YELLOW;
-    private final static Color COLOR_ROCK = Color.CYAN;
+    private final static Color COLOR_ROCK = Color.PURPLE;
     private final static Color COLOR_HERBIVORE = Color.BLUE;
     private final static Color COLOR_PREDATOR = Color.RED;
 
